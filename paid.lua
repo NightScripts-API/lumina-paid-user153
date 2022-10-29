@@ -1029,26 +1029,22 @@ local Slider = Tab:CreateSlider({
 local Tab = Window:CreateTab("Player")
             local Section = Tab:CreateSection("Weapon Contents")
 
-local Toggle = Tab:CreateToggle({
+local Button = Tab:CreateButton({
 	Name = "Reach",
-	CurrentValue = false,
-	Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-	Callback = function(state)
-	if state then
-        if player.Character:FindFirstChildWhichIsA('Tool') then
+	Callback = function()
+		if player.Character:FindFirstChildWhichIsA('Tool') then
             player.Character:FindFirstChildWhichIsA('Tool').Handle.Size = Vector3.new(50,50,50)
         	player.Character:FindFirstChildWhichIsA('Tool').Handle.Transparency = 1
               Rayfield:Notify("Reach: On","_LocalPlayer",10010348543) -- (t,c,image)
         else
             Rayfield:Notify("Error","Please hold a weapon!",10010348543) -- (t,c,image)
         end
- else
-      
-            Rayfield:Notify("Error","Sorry there was an error while request the url! Reach is still on!",10010348543) -- (t,c,image)
-        
-    end
+
 	end,
 })
+        
+      
+
 
 local Section = Tab:CreateSection("Jump Contents")
 
