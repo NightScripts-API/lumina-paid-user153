@@ -1113,6 +1113,64 @@ local Button = Tab:CreateButton({
 local Settings = { AimLock = { Enabled = true, Aimlockkey = "c", Prediction = 0.130340, Aimpart = 'HumanoidRootPart', Notifications = true }, Settings = { Thickness = 4.0, Transparency = 0.3, Color = Color3.fromRGB(179, 182, 246), FOV = true } } local CurrentCamera = game:GetService("Workspace").CurrentCamera local Inset = game:GetService("GuiService"):GetGuiInset().Y local RunService = game:GetService("RunService") local Mouse = game.Players.LocalPlayer:GetMouse() local LocalPlayer = game.Players.LocalPlayer local Line = Drawing.new("Line") local Circle = Drawing.new("Circle") local Plr = game.Players.LocalPlayer Mouse.KeyDown:Connect(function(KeyPressed) if KeyPressed == (Settings.AimLock.Aimlockkey) then if Settings.AimLock.Enabled == true then Settings.AimLock.Enabled = false if Settings.AimLock.Notifications == true then Plr = FindClosestPlayer() game.StarterGui:SetCore("SendNotification", { Title = "True", Text = "Unlocked" }) end else Plr = FindClosestPlayer() Settings.AimLock.Enabled = true if Settings.AimLock.Notifications == true then game.StarterGui:SetCore("SendNotification", { Title = "True", Text = "True : " .. tostring(Plr.Character.Humanoid.DisplayName) }) end end end end) function FindClosestPlayer() local ClosestDistance, ClosestPlayer = math.huge, nil; for _, Player in next, game:GetService("Players"):GetPlayers() do if Player ~= LocalPlayer then local Character = Player.Character if Character and Character.Humanoid.Health > 1 then local Position, IsVisibleOnViewPort = CurrentCamera:WorldToViewportPoint(Character.HumanoidRootPart .Position) if IsVisibleOnViewPort then local Distance = (Vector2.new(Mouse.X, Mouse.Y) - Vector2.new(Position.X, Position.Y)).Magnitude if Distance < ClosestDistance then ClosestPlayer = Player ClosestDistance = Distance end end end end end return ClosestPlayer, ClosestDistance end RunService.Heartbeat:connect(function() if Settings.AimLock.Enabled == true then local Vector = CurrentCamera:WorldToViewportPoint(Plr.Character[Settings.AimLock.Aimpart].Position + (Plr.Character[Settings.AimLock.Aimpart].Velocity * Settings.AimLock.Prediction)) Line.Color = Settings.Settings.Color Line.Transparency = Settings.Settings .Transparency Line.Thickness = Settings.Settings .Thickness Line.From = Vector2.new(Mouse.X, Mouse.Y + Inset) Line.To = Vector2.new(Vector.X, Vector.Y) Line.Visible = true Circle.Position = Vector2.new(Mouse.X, Mouse.Y + Inset) Circle.Visible = Settings.Settings.FOV Circle.Thickness = 1.5 Circle.Thickness = 2 Circle.Radius = 75 Circle.Color = Settings.Settings.Color elseif Settings.AimLock.FOV == true then Circle.Visible = true else Circle.Visible = false Line.Visible = false end end) local mt = getrawmetatable(game) local old = mt.__namecall setreadonly(mt, false) mt.__namecall = newcclosure(function(...) local args = {...} if Settings.AimLock.Enabled and getnamecallmethod() == "FireServer" and args[2] == "MousePos" then args[3] = Plr.Character[Settings.AimLock.Aimpart].Position + (Plr.Character[Settings.AimLock.Aimpart].Velocity * Settings.AimLock.Prediction) return old(unpack(args)) end return old(...) end)
     end,
 })
+				
+local Tab = Window:CreateTab("All Players")
+local Section = Tab:CreateSection("ESP")
+local Button = Tab:CreateButton({
+	Name = "Name ESP",
+	Callback = function()
+		function isnil(thing)
+return (thing == nil)
+end
+
+
+local function round(n)
+return math.floor(tonumber(n) + 0.5)
+end
+
+function UpdatePlayerChams()
+for i,v in pairs(game:GetService'Players':GetChildren()) do
+pcall(function()
+if not isnil(v.Character) then
+for _,k in pairs(v.Character:GetChildren()) do
+if k:IsA'BasePart' and not k:FindFirstChild'Cham' then
+local cham = Instance.new('BoxHandleAdornment',k)
+cham.ZIndex= 10
+cham.Adornee=k
+cham.AlwaysOnTop=true
+cham.Size=k.Size
+cham.Transparency=1
+cham.Color3=Color3.new(1,0,0)
+cham.Name = 'Cham'
+end
+end
+if not isnil(v.Character.Head) and not v.Character.Head:FindFirstChild'NameEsp' then
+local bill = Instance.new('BillboardGui',v.Character.Head)
+bill.Name = 'NameEsp'
+bill.Size=UDim2.new(1,200,1,30)
+bill.Adornee=v.Character.Head
+bill.AlwaysOnTop=true
+local name = Instance.new('TextLabel',bill)
+name.TextWrapped=true
+name.Text = (v.Name ..' '.. round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Character.Head.Position).Magnitude/3) ..'m')
+name.Size = UDim2.new(1,0,1,0)
+name.TextYAlignment='Top'
+name.TextColor3=Color3.new(1,1,1)
+name.BackgroundTransparency=1
+else
+v.Character.Head.NameEsp.TextLabel.Text = (v.Name ..' '.. round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Character.Head.Position).Magnitude/3) ..'m')
+end
+end
+end)
+end
+end
+
+while wait() do
+UpdatePlayerChams()
+end
+
+	end,
+})
 
 local Tab = Window:CreateTab("Hub")
 local Section = Tab:CreateSection("Free Scripts")
