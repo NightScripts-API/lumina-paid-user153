@@ -19,7 +19,7 @@ local Window = Rayfield:CreateWindow({
 		Title = "Lumina Premium",
 		Subtitle = "Premium Key",
 		Note = "Don't have premium? use Lumina Free!",
-		Key = "XCA82-OSD81-XJWJ-712SD"
+		Key = "C8MXJ-928XO-1818X-RPXMB"
 	}
 })
 
