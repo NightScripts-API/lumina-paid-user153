@@ -665,7 +665,7 @@ FLYSPEED = 8
 
 
   local Section = Tab:CreateSection("Fly Contents")
-  local Paragraph = Tab:CreateParagraph({Title = "CFly Info", Content = "CFly Fly in the Sky and Shoot, Activate Speed [B], Click [B], Then Select X to Fly!, Click or Spam Space on Shoot!"})
+  local Paragraph = Tab:CreateParagraph({Title = "CFly Info", Content = "CFly Fly in the Sky and Shoot, Activate Speed [B], Click [B], Then Select X to Fly!, Click or Spam Space on Shoot!, MAKE SURE FLY SPEED IS 8"})
 local Button3 = Tab:CreateButton({
 	Name = "CFly (X)",
 	Callback = function()
