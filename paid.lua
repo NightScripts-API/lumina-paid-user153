@@ -1,5 +1,5 @@
 
-local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Rayfield/main/source'))()
+local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/NightScripts-API/rayfield-customized/main/ui.ai'))()
 
 
 local Player = game.Players.LocalPlayer
